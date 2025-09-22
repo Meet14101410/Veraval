@@ -1,0 +1,47 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Data::Dumper;
+
+my $data_file = 'veraval_data.txt';
+open my $fh, '<', $data_file or die "Cannot open '$data_file': $!";
+
+my %veraval_data;
+
+# Read and parse the data file
+while (my $line = <$fh>) {
+    chomp $line;
+    next if $line =~ /^#/;
+    my ($type, $name, $description) = split /\|/, $line;
+    push @{$veraval_data{$type}}, {
+        name => $name,
+        description => $description
+    };
+}
+close $fh;
+
+# Generate a report for a specific category
+sub generate_report_by_type {
+    my $type = shift;
+    print "--- Report on $type in Veraval ---\n";
+    if (exists $veraval_data{$type}) {
+        foreach my $item (@{$veraval_data{$type}}) {
+            print "  - Name: $item->{name}\n";
+            print "    Description: $item->{description}\n";
+        }
+    } else {
+        print "No data found for type '$type'.\n";
+    }
+    print "\n";
+}
+
+# Main script logic
+generate_report_by_type("Religious Site");
+generate_report_by_type("Coastal Area");
+
+__END__
+# Data for veraval_data.txt
+# Type|Name|Description
+Religious Site|Somnath Temple|A revered pilgrimage site and one of the twelve Jyotirlingas of Shiva.
+Religious Site|Bhalka Teerth|A sacred place where Lord Krishna is believed to have been shot by a hunter.
+Coastal Area|Veraval Beach|A popular local beach and a major fishing port.
