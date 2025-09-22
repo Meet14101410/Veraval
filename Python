@@ -1,0 +1,42 @@
+class VeravalInfoSystem:
+    """A basic information system for Veraval city."""
+    
+    def __init__(self):
+        self.city_facts = {
+            "Location": "Gujarat, India",
+            "Population": "Approx. 160,000 (2023)",
+            "Known For": "Major fishing port, tourism, and Somnath Temple"
+        }
+        self.points_of_interest = [
+            {"name": "Somnath Temple", "type": "Religious Site", "description": "A revered pilgrimage site and one of the twelve Jyotirlingas of Shiva."},
+            {"name": "Bhalka Teerth", "type": "Religious Site", "description": "A sacred place where Lord Krishna is believed to have been shot by a hunter."},
+            {"name": "Veraval Beach", "type": "Coastal Area", "description": "A popular local beach and a major fishing port."}
+        ]
+
+    def get_city_fact(self, fact_name):
+        """Retrieves and prints a specific city fact."""
+        if fact_name in self.city_facts:
+            print(f"{fact_name}: {self.city_facts[fact_name]}")
+        else:
+            print(f"Fact not found: {fact_name}")
+
+    def search_points_of_interest(self, search_term):
+        """Searches for points of interest by name or type."""
+        print(f"\n--- Search Results for '{search_term}' ---")
+        found = False
+        for poi in self.points_of_interest:
+            if search_term.lower() in poi["name"].lower() or search_term.lower() in poi["type"].lower():
+                print(f"Name: {poi['name']}")
+                print(f"Type: {poi['type']}")
+                print(f"Description: {poi['description']}")
+                print("-" * 40)
+                found = True
+        if not found:
+            print("No matching points of interest found.")
+
+# Main script logic
+info_system = VeravalInfoSystem()
+info_system.get_city_fact("Population")
+info_system.get_city_fact("Known For")
+info_system.search_points_of_interest("Temple")
+info_system.search_points_of_interest("Beach")
